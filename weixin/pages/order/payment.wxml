@@ -1,0 +1,61 @@
+<!-- pages/order/payment.wxml -->
+<view class="payment-container">
+  <!-- 支付头部 -->
+  <view class="payment-header">
+    <view class="amount-section">
+      <text class="amount-label">支付金额</text>
+      <text class="amount-value">¥{{amount}}</text>
+    </view>
+    <view class="balance-section">
+      <text class="balance-label">账户余额</text>
+      <text class="balance-value">¥{{balance}}</text>
+    </view>
+  </view>
+
+  <!-- 支付信息 -->
+  <view class="payment-info">
+    <text class="info-text">正在安全支付，请输入支付密码</text>
+  </view>
+
+  <!-- 密码输入框 -->
+  <view class="password-section">
+    <view class="password-input" bindtap="onDotTap">
+      <view class="dots-container">
+        <view class="dot {{dots[0] ? 'filled' : ''}}"></view>
+        <view class="dot {{dots[1] ? 'filled' : ''}}"></view>
+        <view class="dot {{dots[2] ? 'filled' : ''}}"></view>
+        <view class="dot {{dots[3] ? 'filled' : ''}}"></view>
+        <view class="dot {{dots[4] ? 'filled' : ''}}"></view>
+        <view class="dot {{dots[5] ? 'filled' : ''}}"></view>
+      </view>
+    </view>
+    <view class="forget-password" bindtap="onForgetPassword">
+      <text class="forget-text">忘记密码?</text>
+    </view>
+  </view>
+
+  <!-- 数字键盘 -->
+  <view class="keyboard" wx:if="{{showKeyboard}}">
+    <view class="keyboard-row" wx:for="{{keyboard}}" wx:key="index" wx:for-item="row">
+      <view 
+        class="keyboard-item {{item === '' ? 'empty' : ''}}" 
+        wx:for="{{row}}" 
+        wx:key="*this" 
+        wx:for-item="item"
+        data-key="{{item}}"
+        bindtap="onKeyTap"
+      >
+        <text class="key-text">{{item}}</text>
+      </view>
+    </view>
+    <view class="keyboard-row">
+      <view class="keyboard-item empty"></view>
+      <view class="keyboard-item" bindtap="onDeleteTap">
+        <image class="delete-icon" src="/images/delete.png" mode="aspectFit"></image>
+      </view>
+      <view class="keyboard-item cancel-item" bindtap="onCancelTap">
+        <text class="cancel-text">取消</text>
+      </view>
+    </view>
+  </view>
+</view>

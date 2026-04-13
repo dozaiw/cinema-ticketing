@@ -1,0 +1,14 @@
+# 服务器配置
+server:
+  port: 8003
+
+spring:
+  config:
+    import: optional:classpath:cinema-shared.yml
+  application:
+    name: cinema-ticketing
+
+movie:
+  cache:
+    hot-movies:
+      expire: 30

@@ -1,0 +1,320 @@
+/* pages/seat/seat.wxss */
+page {
+  background-color: #f5f5f5;
+  height: 100%;
+}
+
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ========== 顶部电影信息 ========== */
+.movie-header {
+  display: flex;
+  align-items: center;
+  padding: 20rpx;
+  background-color: #fff;
+  border-bottom: 1rpx solid #eee;
+}
+
+.movie-poster {
+  width: 120rpx;
+  height: 160rpx;
+  border-radius: 8rpx;
+  margin-right: 20rpx;
+}
+
+.movie-info {
+  flex: 1;
+}
+
+.movie-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  display: block;
+  margin-bottom: 10rpx;
+}
+
+.schedule-detail {
+  font-size: 24rpx;
+  color: #666;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.detail-item {
+  margin: 0 5rpx;
+}
+
+.divider {
+  color: #ccc;
+  margin: 0 5rpx;
+}
+
+.price-info {
+  text-align: right;
+}
+
+.price-symbol {
+  font-size: 24rpx;
+  color: #ff4d4f;
+}
+
+.price-value {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #ff4d4f;
+}
+
+/* ========== 座位地图容器 ========== */
+.seat-map-container {
+  flex: 1;
+  padding: 20rpx;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+}
+
+.seat-map-header {
+  text-align: center;
+  margin-bottom: 10rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20rpx;
+}
+
+.hall-name {
+  font-size: 28rpx;
+  color: #333;
+  font-weight: 500;
+}
+
+.debug-info {
+  font-size: 20rpx;
+  color: #999;
+}
+
+/* 银幕样式 */
+.screen-area {
+  text-align: center;
+  margin: 20rpx 0;
+}
+
+.screen {
+  width: 80%;
+  height: 20rpx;
+  background: linear-gradient(to bottom, #999, #ccc);
+  border-radius: 10rpx 10rpx 0 0;
+  margin: 0 auto 10rpx;
+}
+
+.screen-text {
+  font-size: 28rpx;
+  color: #999;
+}
+
+/* ========== 座位滚动区域 ========== */
+.seats-container {
+  flex: 1;
+  overflow: auto;
+  padding: 20rpx;
+  background-color: #fff;
+  border-radius: 16rpx;
+}
+
+.seat-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 12rpx;
+  justify-content: center;
+}
+
+.row-label {
+  width: 50rpx;
+  text-align: center;
+  margin-right: 15rpx;
+  font-size: 24rpx;
+  color: #666;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.seats-in-row {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+/* ========== 座位基础样式 ========== */
+.seat-item {
+  cursor: pointer;
+  transition: transform 0.2s ease;
+}
+
+.seat-item:active {
+  transform: scale(0.9);
+}
+
+.seat-text {
+  font-size: 20rpx;
+  color: #fff;
+  font-weight: bold;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+}
+
+/* ========== 图例样式 ========== */
+.legend {
+  display: flex;
+  justify-content: center;
+  gap: 50rpx;
+  margin: 20rpx 0 0;
+  padding-top: 20rpx;
+  border-top: 1rpx solid #eee;
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10rpx;
+  font-size: 24rpx;
+  color: #666;
+}
+
+.legend-box {
+  width: 32rpx;
+  height: 32rpx;
+  border-radius: 4rpx;
+}
+
+.legend-available {
+  background-color: #52c41a;
+}
+
+.legend-selected {
+  background-color: #fa8c16;
+}
+
+.legend-sold {
+  background-color: #ff4d4f;
+}
+
+/* ========== 底部操作栏 ========== */
+.bottom-bar {
+  padding: 20rpx;
+  border-top: 1rpx solid #eee;
+  background-color: white;
+}
+
+.selected-seats-info {
+  margin-bottom: 15rpx;
+}
+
+.selected-count {
+  font-size: 26rpx;
+  color: #333;
+  display: block;
+  margin-bottom: 10rpx;
+}
+
+.selected-seats-list {
+  white-space: nowrap;
+}
+
+.selected-seat-tag {
+  display: inline-block;
+  background-color: #fff3cd;
+  color: #856404;
+  padding: 8rpx 15rpx;
+  border-radius: 20rpx;
+  margin-right: 10rpx;
+  font-size: 24rpx;
+  position: relative;
+}
+
+.remove-tag {
+  margin-left: 8rpx;
+  color: #999;
+  font-size: 24rpx;
+}
+
+.total-price-section {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-bottom: 20rpx;
+}
+
+.total-label {
+  font-size: 32rpx;
+  color: #666;
+  margin-right: 10rpx;
+  font-weight: 500;
+}
+
+.total-price {
+  display: flex;
+  align-items: baseline;
+}
+
+.total-price .currency {
+  font-size: 32rpx;
+  color: #ff4d4f;
+  margin-right: 4rpx;
+  font-weight: 500;
+}
+
+.total-price .amount {
+  font-size: 56rpx;
+  font-weight: bold;
+  color: #ff4d4f;
+}
+
+.confirm-btn {
+  width: 100%;
+  height: 80rpx;
+  line-height: 80rpx;
+  background-color: #ff4d4f;
+  color: white;
+  border-radius: 40rpx;
+  font-size: 32rpx;
+  border: none;
+}
+
+.confirm-btn.disabled {
+  background-color: #cccccc;
+  color: #999;
+}
+
+.seat-item {
+  width: 40rpx;
+  height: 40rpx;
+  border-radius: 4rpx;
+  margin: 4rpx;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20rpx;
+}
+
+.seat-item.available {
+  background-color: #f0f0f0;
+  color: #666;
+  border: 1rpx solid #ddd;
+}
+
+.seat-item.selected {
+  background-color: #1890ff;
+  color: white;
+  border: 1rpx solid #1890ff;
+}
+
+.seat-item.sold {
+  background-color: #d9d9d9;
+  color: #999;
+  border: 1rpx solid #d9d9d9;
+}

@@ -1,0 +1,57 @@
+<!-- pages/order/order.wxml -->
+<view class="container">
+  <!-- 订单列表 -->
+  <view class="order-list" wx:if="{{orders.length > 0}}">
+    <view class="order-item" wx:for="{{orders}}" wx:key="orderId" bindtap="navigateToDetail" data-order-id="{{item.orderId}}">
+      <!-- 订单头部 -->
+      <view class="order-header">
+        <text class="order-no">{{item.orderNo}}</text>
+        <text class="order-status" style="color: {{item.statusColor}};">{{item.statusText}}</text>
+      </view>
+
+      <!-- 电影信息 -->
+      <view class="movie-section">
+        <text class="movie-name">{{item.movieName}}</text>
+        <view class="info-row">
+          <text class="info-text">{{item.hallName}}</text>
+          <text class="divider">|</text>
+          <text class="info-text">{{item.showTime}}</text>
+        </view>
+      </view>
+
+      <!-- 座位信息 -->
+      <view class="seat-section">
+        <text class="label">座位：</text>
+        <text class="seat-info">{{item.seatNames}}</text>
+      </view>
+
+      <!-- 金额信息 -->
+      <view class="amount-section">
+        <text class="amount">¥{{item.displayAmount}}</text>
+      </view>
+
+      <!-- 操作按钮 - 待支付订单显示 -->
+      <view class="action-section" wx:if="{{item.statusText === '待支付'}}" catchtap="preventDetail">
+        <button class="btn-cancel" catchtap="cancelOrder" data-order-id="{{item.orderId}}">取消订单</button>
+        <button class="btn-pay" catchtap="payOrder" data-order-id="{{item.orderId}}" data-amount="{{item.displayAmount}}">去支付</button>
+      </view>
+
+      <!-- 操作按钮 - 已支付订单显示退款按钮 -->
+      <view class="action-section" wx:if="{{item.statusText === '已支付'}}" catchtap="preventDetail">
+        <button class="btn-refund" catchtap="refundOrder" data-order-id="{{item.orderId}}">申请退款</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{orders.length === 0 && !loading}}">
+    <image class="empty-icon" src="/images/empty.png" mode="aspectFit"></image>
+    <text class="empty-text">暂无订单</text>
+    <button class="btn-home" bindtap="goHome">去选电影</button>
+  </view>
+
+  <!-- 加载中 -->
+  <view class="loading-state" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+</view>

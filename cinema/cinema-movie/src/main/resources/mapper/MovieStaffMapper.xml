@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cinema.movie.mapper.MovieStaffMapper">
+
+    <!-- 根据演员ID删除所有关联记录 -->
+    <delete id="deleteByActorId" parameterType="java.lang.Integer">
+        DELETE FROM movie_staff
+        WHERE actor_id = #{actorId}
+    </delete>
+
+    <!-- 根据电影ID删除所有关联记录 -->
+    <delete id="deleteByMovieId" parameterType="java.lang.Integer">
+        DELETE FROM movie_staff
+        WHERE movie_id = #{movieId}
+    </delete>
+
+    <!-- 根据电影ID和演员ID删除关联记录 -->
+    <delete id="deleteByMovieIdAndActorId" parameterType="map">
+        DELETE FROM movie_staff
+        WHERE movie_id = #{movieId}
+        AND actor_id = #{actorId}
+    </delete>
+
+    <!-- 根据电影ID查询所有人员（带演员信息） -->
+    <select id="selectByMovieId" resultType="com.cinema.movie.vo.MovieStaffVO">
+        SELECT
+        ms.id,
+        ms.movie_id AS movieId,
+        m.title AS movieTitle,
+        ms.actor_id AS actorId,
+        a.name AS actorName,
+        a.avatar_url AS avatarUrl,
+        ms.role,
+        ms.character_name AS characterName,
+        ms.order_index AS orderIndex
+        FROM movie_staff ms
+        LEFT JOIN actor a ON ms.actor_id = a.id
+        LEFT JOIN movie m ON ms.movie_id = m.id
+        WHERE ms.movie_id = #{movieId}
+        ORDER BY
+        CASE ms.role
+        WHEN '导演' THEN 1
+        WHEN '编剧' THEN 2
+        WHEN '主演' THEN 3
+        WHEN '配角' THEN 4
+        ELSE 5
+        END,
+        ms.order_index DESC
+    </select>
+
+    <!-- 根据演员ID查询所有参与的电影（带电影信息） -->
+    <select id="selectByActorId" resultType="com.cinema.movie.vo.MovieStaffVO">
+        SELECT
+        ms.id,
+        ms.movie_id AS movieId,
+        m.title AS movieTitle,
+        ms.actor_id AS actorId,
+        a.name AS actorName,
+        a.avatar_url AS avatarUrl,
+        ms.role,
+        ms.character_name AS characterName,
+        ms.order_index AS orderIndex
+        FROM movie_staff ms
+        LEFT JOIN actor a ON ms.actor_id = a.id
+        LEFT JOIN movie m ON ms.movie_id = m.id
+        WHERE ms.actor_id = #{actorId}
+        ORDER BY m.release_date DESC
+    </select>
+
+    <!-- 根据电影ID和职务查询人员 -->
+    <select id="selectByMovieIdAndRole" resultType="com.cinema.movie.vo.MovieStaffVO">
+        SELECT
+        ms.id,
+        ms.movie_id AS movieId,
+        m.title AS movieTitle,
+        ms.actor_id AS actorId,
+        a.name AS actorName,
+        a.avatar_url AS avatarUrl,
+        ms.role,
+        ms.character_name AS characterName,
+        ms.order_index AS orderIndex
+        FROM movie_staff ms
+        LEFT JOIN actor a ON ms.actor_id = a.id
+        LEFT JOIN movie m ON ms.movie_id = m.id
+        WHERE ms.movie_id = #{movieId}
+        AND ms.role = #{role}
+        ORDER BY ms.order_index DESC
+    </select>
+
+    <!-- 批量插入电影人员关联 -->
+    <insert id="batchInsert" parameterType="java.util.List">
+        INSERT INTO movie_staff (movie_id, actor_id, role, character_name, order_index)
+        VALUES
+        <foreach collection="list" item="item" separator=",">
+            (
+            #{item.movieId},
+            #{item.actorId},
+            #{item.role},
+            #{item.characterName},
+            #{item.orderIndex}
+            )
+        </foreach>
+    </insert>
+
+</mapper>

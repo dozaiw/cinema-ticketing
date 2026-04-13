@@ -1,0 +1,53 @@
+<view class="chat-container">
+  <!-- 头部 -->
+  <view class="header">
+    <text class="title">AI电影助手</text>
+    <text class="clear-btn" bindtap="clearChat">清空</text>
+  </view>
+
+  <!-- 消息列表 -->
+  <scroll-view class="message-list" scroll-y scroll-into-view="{{scrollToView}}" scroll-with-animation>
+    <view id="msg-{{index}}" class="message-item {{item.type}}" wx:for="{{messages}}" wx:key="index">
+      <view class="message-content">
+        <text class="time" wx:if="{{item.type !== 'system'}}">{{item.time}}</text>
+        <view class="content {{item.type}}" wx:if="{{item.type === 'system'}}">{{item.content}}</view>
+        <rich-text class="content {{item.type}}" wx:if="{{item.type === 'user'}}" nodes="{{item.content}}"></rich-text>
+        <rich-text class="content {{item.type}}" wx:if="{{item.type === 'ai'}}" nodes="{{item.renderedContent}}"></rich-text>
+      </view>
+    </view>
+
+    <!-- 加载提示 -->
+    <view class="loading-more" wx:if="{{loading}}">
+      <text class="loading-text">AI正在思考中</text>
+      <view class="loading-dots">
+        <view class="dot"></view>
+        <view class="dot"></view>
+        <view class="dot"></view>
+      </view>
+    </view>
+
+    <!-- 空状态提示 -->
+    <view class="empty-tips" wx:if="{{messages.length === 0}}">
+      <text class="tips-icon">🎬</text>
+      <text class="tips-text">开始对话吧</text>
+    </view>
+  </scroll-view>
+
+  <!-- 输入区域 -->
+  <view class="input-area">
+    <view class="input-wrapper">
+      <input
+        class="input"
+        type="text"
+        placeholder="问我电影相关问题..."
+        value="{{inputValue}}"
+        bindinput="onInput"
+        bindconfirm="onSend"
+        confirm-type="send"
+      />
+      <button class="send-btn" bindtap="onSend" disabled="{{loading || !inputValue}}">
+        <text>{{loading ? '发送中' : '发送'}}</text>
+      </button>
+    </view>
+  </view>
+</view>

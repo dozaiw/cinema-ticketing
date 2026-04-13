@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cinema.ticketing.mapper.OrderMapper">
+
+    <!-- 查询今日各影院销售额统计 -->
+    <select id="selectCinemaSalesStats" resultType="com.cinema.ticketing.dto.HallSalesStats">
+        SELECT
+        c.name AS cinemaName,
+        NULL AS hallName,
+        SUM(o.total_amount) AS totalAmount,
+        COUNT(o.id) AS orderCount,
+        0.0 AS percentage
+        FROM
+        cinema_order o
+        INNER JOIN
+        seat_schedule ss ON o.schedule_id = ss.schedule_id
+        INNER JOIN
+        hall h ON ss.hall_id = h.id
+        INNER JOIN
+        cinema c ON h.cinema_id = c.id
+        WHERE
+        o.create_time <![CDATA[ >= ]]> #{startDate}
+        AND o.create_time <![CDATA[ < ]]> #{endDate}
+        AND o.status IN ('PAID', 'USED')
+        GROUP BY
+        c.id, c.name
+        ORDER BY
+        totalAmount DESC
+    </select>
+
+</mapper>

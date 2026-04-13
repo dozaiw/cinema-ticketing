@@ -1,0 +1,46 @@
+<view class="favorite-container">
+  <!-- 头部标题 -->
+  <view class="header">
+    <text class="title">我的收藏</text>
+    <text class="count">({{favoriteList.length}})</text>
+  </view>
+
+  <!-- 收藏列表 -->
+  <view class="movie-list" wx:if="{{!loading}}">
+    <view class="movie-item" wx:for="{{favoriteList}}" wx:key="id">
+      <image class="poster" src="{{item.poster}}" mode="aspectFill" lazy-load bindtap="goDetail" data-id="{{item.id}}" />
+      <view class="info" bindtap="goDetail" data-id="{{item.id}}">
+        <view class="top">
+          <text class="title">{{item.title}}</text>
+          <text class="status" style="color: {{getStatusColor(item.status)}}">{{getStatusText(item.status)}}</text>
+        </view>
+        <view class="desc-box">
+          <text class="desc">{{item.description}}</text>
+        </view>
+        <view class="tags">
+          <text class="tag">{{item.duration}}分钟</text>
+          <text class="tag">{{formatDate(item.releaseDate)}}</text>
+        </view>
+        <view class="bottom">
+          <text class="price" wx:if="{{item.status === 1}}">¥35 起</text>
+          <button class="buy-btn" catchtap="goBuy" data-id="{{item.id}}" wx:if="{{item.status === 1}}">购票</button>
+          <text class="status-tip" wx:if="{{item.status === 2}}">敬请期待</text>
+          <text class="status-tip" wx:if="{{item.status === 3}}">已下架</text>
+          <button class="unfavorite-btn" catchtap="toggleFavorite" data-id="{{item.id}}" data-index="{{index}}">取消收藏</button>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{!loading && favoriteList.length === 0}}">
+    <text class="empty-icon">💔</text>
+    <text class="empty-text">暂无收藏电影</text>
+    <text class="empty-hint">快去收藏喜欢的电影吧</text>
+  </view>
+
+  <!-- 加载中 -->
+  <view class="loading" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+</view>

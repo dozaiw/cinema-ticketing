@@ -1,0 +1,29 @@
+# OS / IDE
+.DS_Store
+Thumbs.db
+**/.idea/
+**/.vscode/
+**/.codebuddy/
+
+# Java / Maven
+**/target/
+**/*.class
+
+# Node / Vite
+**/node_modules/
+**/dist/
+**/.env
+**/.env.*
+!**/.env.example
+
+# WeChat DevTools local config
+**/project.private.config.json
+
+# Logs / archives
+**/*.log
+**/logs/
+**/log/
+*.zip
+
+# Large local media assets
+resource/

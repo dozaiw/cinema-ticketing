@@ -1,0 +1,30 @@
+# application.yml
+server:
+  port: 8004
+
+spring:
+  config:
+    import: optional:classpath:cinema-shared.yml
+
+mybatis-plus:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: auto
+
+logging:
+  level:
+    org.springframework.web.client: DEBUG
+    com.cinema.ai.client: DEBUG
+    feign: DEBUG
+
+feign:
+  client:
+    config:
+      cinema-movie:
+        connectTimeout: 5000
+        readTimeout: 10000
+        loggerLevel: FULL

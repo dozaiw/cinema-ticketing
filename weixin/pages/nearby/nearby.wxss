@@ -1,0 +1,93 @@
+.nearby-container {
+  padding: 20rpx;
+  background: #F5F5F5;
+  min-height: 100vh;
+}
+
+/* 顶部定位信息 */
+.location-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #FFFFFF;
+  padding: 30rpx;
+  border-radius: 16rpx;
+  margin-bottom: 20rpx;
+}
+.location-icon {
+  font-size: 32rpx;
+  margin-right: 10rpx;
+}
+.location-text {
+  flex: 1;
+  font-size: 28rpx;
+  color: #333;
+}
+.refresh-btn {
+  font-size: 28rpx;
+  color: #FF5722;
+}
+
+/* 影院列表 */
+.cinema-list {
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  overflow: hidden;
+}
+.cinema-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 30rpx;
+  border-bottom: 1rpx solid #EEEEEE;
+}
+.cinema-item:last-child {
+  border-bottom: none;
+}
+.cinema-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.cinema-name {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+.cinema-address {
+  font-size: 24rpx;
+  color: #666;
+  margin-bottom: 5rpx;
+}
+.cinema-phone {
+  font-size: 24rpx;
+  color: #999;
+}
+.cinema-distance {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-left: 20rpx;
+}
+.distance-value {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #FF5722;
+}
+
+/* 无数据 */
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 100rpx 0;
+}
+.empty-icon {
+  font-size: 100rpx;
+  margin-bottom: 20rpx;
+}
+.empty-text {
+  color: #999;
+  font-size: 28rpx;
+}

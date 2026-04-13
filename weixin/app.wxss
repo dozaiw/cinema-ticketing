@@ -1,0 +1,42 @@
+/* app.wxss */
+page {
+  --bg-color: #F5F5F5;       /* 浅灰背景 */
+  --card-bg: #FFFFFF;        /* 白色卡片 */
+  --text-main: #333333;      /* 主要文字 */
+  --text-sub: #999999;       /* 次要文字 */
+  --primary: #FF5722;        /* 猫眼红 */
+  --primary-hover: #FF7043;  /* 按钮高亮 */
+  --border: #EEEEEE;         /* 分割线 */
+  
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+  font-size: 28rpx;
+  box-sizing: border-box;
+}
+
+/* 通用卡片 */
+.card {
+  background: var(--card-bg);
+  border-radius: 16rpx;
+  padding: 24rpx;
+  margin: 20rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.05); /* 轻微阴影 */
+}
+
+/* 猫眼红按钮 */
+.btn-primary {
+  background: var(--primary);
+  color: #FFFFFF;
+  font-weight: bold;
+  border-radius: 40rpx;
+  border: none;
+  box-shadow: 0 4rpx 12rpx rgba(255, 87, 34, 0.3);
+}
+
+/* 文字省略 */
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}

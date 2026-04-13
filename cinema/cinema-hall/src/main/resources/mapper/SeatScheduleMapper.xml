@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.cinema.hall.mapper.SeatScheduleMapper">
+
+    <!-- 基础结果映射 -->
+    <resultMap id="SeatConditionVOMap" type="com.cinema.hall.vo.SeatConditionVO">
+        <!-- SeatSchedule 字段 -->
+        <id property="id" column="ss_id"/>
+        <result property="scheduleId" column="schedule_id"/>
+        <result property="seatId" column="seat_id"/>
+        <result property="hallId" column="hall_id"/>
+        <result property="seatStatus" column="seat_status"/>
+        <result property="userId" column="user_id"/>
+        <result property="orderId" column="order_id"/>
+        <result property="lastUpdateTime" column="update_time"/>
+
+        <!-- Seat 表字段 -->
+        <result property="rowNum" column="row_num"/>
+        <result property="colNum" column="col_num"/>
+    </resultMap>
+
+    <!-- 连表查询：seat_schedule + seat -->
+    <select id="querySeatConditionWithRowCol" resultMap="SeatConditionVOMap">
+        SELECT
+            ss.id AS ss_id,
+            ss.schedule_id,
+            ss.seat_id,
+            ss.hall_id,
+            ss.seat_status,
+            ss.user_id,
+            ss.order_id,
+            ss.update_time,
+            s.row_num,
+            s.col_num
+        FROM seat_schedule ss
+        LEFT JOIN seat s ON ss.seat_id = s.id
+        WHERE ss.schedule_id = #{scheduleId}
+        ORDER BY s.row_num, s.col_num
+    </select>
+
+</mapper>

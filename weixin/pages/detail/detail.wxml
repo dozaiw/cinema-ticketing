@@ -1,0 +1,212 @@
+<view class="detail-container">
+  <!-- 头部信息 -->
+  <view class="header">
+    <image src="{{movie.poster}}" mode="aspectFill" class="poster" />
+    <view class="info">
+      <view class="title-row">
+        <text class="title">{{movie.title}}</text>
+      </view>
+
+      <!-- 类型标签 -->
+      <view class="genres" wx:if="{{movie.genres && movie.genres.length > 0}}">
+        <text class="genre-tag" wx:for="{{movie.genres}}" wx:key="id">{{item.name}}</text>
+      </view>
+
+      <view class="tags">
+        <text class="tag">{{movie.duration}}分钟</text>
+        <text class="tag">{{formatDate(movie.releaseDate)}}</text>
+      </view>
+
+      <!-- 评分和收藏 -->
+      <view class="action-row">
+        <!-- 评分 -->
+        <view class="score-container" wx:if="{{movie.score > 0}}">
+          <text class="score-value">{{movie.score}}</text>
+          <text class="score-unit">分</text>
+        </view>
+        <view class="score-container no-score" wx:else>
+          <text class="score-text">暂未评分</text>
+        </view>
+
+        <!-- 收藏按钮 -->
+        <view class="favorite-btn" bindtap="toggleFavorite">
+          <text class="favorite-icon">{{isFavorite ? '❤️' : '🤍'}}</text>
+          <text class="favorite-text">{{isFavorite ? '已收藏' : '收藏'}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 预告片 -->
+  <view class="section" wx:if="{{movie.trailerUrl}}">
+    <text class="section-title">🎬 预告片</text>
+    <video 
+      src="{{movie.trailerUrl}}" 
+      controls 
+      class="video" 
+      enable-progress-gesture="true"
+      show-play-btn="true"
+    />
+  </view>
+
+  <!-- 剧情简介 -->
+  <view class="section">
+    <text class="section-title">📖 剧情简介</text>
+    <text class="content">{{movie.description}}</text>
+  </view>
+
+  <!-- 演职人员 -->
+  <view class="section" wx:if="{{staffList.length > 0}}">
+    <text class="section-title">🎭 演职人员</text>
+    <scroll-view scroll-x class="cast-list">
+      <view class="cast-item" wx:for="{{staffList}}" wx:key="actorId">
+        <image src="{{item.avatarUrl}}" class="avatar" mode="aspectFill" />
+        <text class="name">{{item.actorName}}</text>
+        <text class="role">{{item.role}}</text>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 评论 -->
+  <view class="section comment-section">
+    <view class="comment-header">
+      <text class="section-title">💬 影评</text>
+      <button class="write-comment-btn" bindtap="showCommentModal">写评论</button>
+    </view>
+
+    <!-- 评论列表 -->
+    <view class="comment-list" wx:if="{{commentList.length > 0}}">
+      <view class="comment-item" wx:for="{{commentList}}" wx:key="id" wx:for-item="comment">
+        <image src="{{comment.userAvatar || '/images/default-avatar.png'}}" class="comment-avatar" mode="aspectFill" />
+        <view class="comment-content-wrapper">
+          <view class="comment-user">
+            <text class="username">{{comment.nickname || '匿名用户'}}</text>
+            <text class="comment-time">{{formatCommentTime(comment.commentTime)}}</text>
+          </view>
+          <!-- 评论评分 -->
+          <view class="comment-rating" wx:if="{{comment.userRating}}">
+            <view class="comment-stars">
+              <view class="comment-star-item" wx:for="{{[1,2,3,4,5]}}" wx:key="*this" wx:for-item="star">
+                <text class="comment-star {{star <= comment.userRating / 2 ? 'active' : ''}}">★</text>
+                <text class="comment-star-half {{star - 0.5 <= comment.userRating / 2 && star > comment.userRating / 2 ? 'active' : ''}}">★</text>
+              </view>
+            </view>
+            <text class="comment-rating-value">{{comment.userRating / 2}}</text>
+          </view>
+          <text class="comment-text">{{comment.commentContent}}</text>
+        </view>
+        <view class="comment-actions">
+          <view
+            class="comment-report"
+            wx:if="{{comment.canReport}}"
+            bindtap="openReportModal"
+            data-comment-id="{{comment.id}}"
+            data-nickname="{{comment.nickname}}"
+          >
+            <text>举报</text>
+          </view>
+          <view class="comment-delete" wx:if="{{comment.canDelete}}" bindtap="deleteComment" data-comment-id="{{comment.id}}">
+            <text>删除</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 暂无评论 -->
+    <view class="no-comment" wx:if="{{commentList.length === 0}}">
+      <text>暂无评论，快来抢沙发吧~</text>
+    </view>
+  </view>
+
+  <!-- 评论输入弹窗 -->
+  <view class="comment-modal" wx:if="{{showCommentInput}}">
+    <view class="comment-mask" bindtap="hideCommentModal"></view>
+    <view class="comment-input-wrapper">
+      <view class="comment-input-header">
+        <text class="cancel-btn" bindtap="hideCommentModal">取消</text>
+        <text class="title">写评论</text>
+        <text class="submit-btn" bindtap="submitComment">发布</text>
+      </view>
+
+      <!-- 评分选择 -->
+      <view class="rating-section">
+        <text class="rating-label">评分：</text>
+        <view class="stars-wrapper">
+          <view class="star-item" wx:for="{{[1,2,3,4,5]}}" wx:key="*this" wx:for-item="star" bindtap="onRatingTap" data-star-index="{{star}}" data-is-half="{{false}}">
+            <text class="star {{star <= commentRating ? 'active' : ''}}">★</text>
+            <text class="star-half {{star - 0.5 <= commentRating && star > commentRating ? 'active' : ''}}" bindtap="onRatingTap" data-star-index="{{star - 1}}" data-is-half="{{true}}" catchtap="true">★</text>
+          </view>
+        </view>
+        <text class="rating-value">{{commentRating}}</text>
+      </view>
+
+      <textarea
+        class="comment-textarea"
+        placeholder="写下你的观影感受..."
+        value="{{commentContent}}"
+        bindinput="onCommentInput"
+        maxlength="500"
+        focus="{{showCommentInput}}"
+        show-confirm-bar="{{false}}"
+        auto-height
+      />
+      <view class="char-count">{{commentContent.length}}/500</view>
+    </view>
+  </view>
+
+  <!-- 评论举报弹窗 -->
+  <view class="comment-modal" wx:if="{{showReportInput}}">
+    <view class="comment-mask" bindtap="hideReportModal"></view>
+    <view class="comment-input-wrapper">
+      <view class="comment-input-header">
+        <text class="cancel-btn" bindtap="hideReportModal">取消</text>
+        <text class="title">举报评论</text>
+        <text class="submit-btn" bindtap="submitReport">提交</text>
+      </view>
+
+      <view class="report-target">
+        举报对象：{{reportTargetNickname || '该评论'}}
+      </view>
+
+      <view class="reason-section">
+        <text class="reason-label">举报原因</text>
+        <view class="reason-options">
+          <view
+            class="reason-chip {{reportReasonType === item ? 'active' : ''}}"
+            wx:for="{{reportReasonOptions}}"
+            wx:key="*this"
+            bindtap="selectReportReason"
+            data-reason="{{item}}"
+          >
+            {{item}}
+          </view>
+        </view>
+      </view>
+
+      <textarea
+        class="comment-textarea"
+        placeholder="补充说明（选填）"
+        value="{{reportContent}}"
+        bindinput="onReportInput"
+        maxlength="200"
+        show-confirm-bar="{{false}}"
+        auto-height
+      />
+      <view class="char-count">{{reportContent.length}}/200</view>
+    </view>
+  </view>
+
+  <!-- 底部购票栏（长条形） -->
+  <view class="bottom-bar" wx:if="{{movie.status === 1}}">
+    <view class="price-info">
+      <text class="price-text">¥{{movie.price || 35}} 起</text>
+    </view>
+    <button class="buy-btn-full" bindtap="goSchedule">购票</button>
+  </view>
+  <view class="bottom-bar disabled" wx:if="{{movie.status === 2}}">
+    <text class="status-info">即将上映，敬请期待</text>
+  </view>
+  <view class="bottom-bar disabled" wx:if="{{movie.status === 3}}">
+    <text class="status-info">已下架</text>
+  </view>
+</view>

@@ -1,0 +1,62 @@
+<view class="verify-page">
+  <view class="hero-card">
+    <text class="hero-title">管理员验票中心</text>
+    <text class="hero-subtitle">支持扫码核销，也可以手动输入验票码</text>
+  </view>
+
+  <view class="verify-card">
+    <text class="card-title">验票码核销</text>
+    <input
+      class="verify-input"
+      placeholder="请输入验票码，例如 TICKET_..."
+      value="{{verifyCode}}"
+      bindinput="onVerifyCodeInput"
+      confirm-type="done"
+      bindconfirm="handleVerify"
+    />
+
+    <view class="action-row">
+      <button class="primary-btn" loading="{{verifying}}" bindtap="handleVerify">立即验票</button>
+      <button class="secondary-btn" bindtap="handleScanVerify">扫码验票</button>
+    </view>
+  </view>
+
+  <view class="result-card" wx:if="{{verifyResult}}">
+    <view class="result-header">
+      <view>
+        <text class="result-title">核销成功</text>
+        <text class="result-time">核销时间：{{lastVerifyTime}}</text>
+      </view>
+      <text class="success-tag">已验票</text>
+    </view>
+
+    <view class="result-list">
+      <view class="result-item">
+        <text class="result-label">订单号</text>
+        <text class="result-value">{{verifyResult.orderNo}}</text>
+      </view>
+      <view class="result-item">
+        <text class="result-label">影院</text>
+        <text class="result-value">{{verifyResult.cinemaName}}</text>
+      </view>
+      <view class="result-item">
+        <text class="result-label">电影</text>
+        <text class="result-value">{{verifyResult.movieName}}</text>
+      </view>
+      <view class="result-item">
+        <text class="result-label">影厅</text>
+        <text class="result-value">{{verifyResult.hallName}}</text>
+      </view>
+      <view class="result-item">
+        <text class="result-label">座位</text>
+        <text class="result-value">{{verifyResult.seatInfo}}</text>
+      </view>
+      <view class="result-item">
+        <text class="result-label">场次时间</text>
+        <text class="result-value">{{verifyResult.showTime}}</text>
+      </view>
+    </view>
+
+    <button class="reset-btn" bindtap="resetResult">继续验票</button>
+  </view>
+</view>

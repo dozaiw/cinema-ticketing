@@ -1,0 +1,144 @@
+<view class="container">
+  <!-- 0. 广告轮播图 -->
+  <swiper class="ad-swiper" wx:if="{{advertisementList.length > 0}}" indicator-dots autoplay circular interval="3000" indicator-color="rgba(255,255,255,0.5)" indicator-active-color="#FF5722">
+    <swiper-item wx:for="{{advertisementList}}" wx:key="id">
+      <image class="ad-image" src="{{item.imageUrl}}" mode="aspectFill" bindtap="onAdTap" data-link="{{item.linkUrl}}" data-movieId="{{item.movieId}}" />
+    </swiper-item>
+  </swiper>
+
+  <!-- 1. 搜索栏 -->
+  <view class="search-bar">
+    <text class="icon">🔍</text>
+    <input 
+      class="search-input" 
+      placeholder="搜索电影" 
+      value="{{searchKeyword}}"
+      bindinput="onSearchInput"
+      bindconfirm="onSearch"
+      confirm-type="search"
+    />
+    <text class="search-btn" wx:if="{{searchKeyword}}" bindtap="onSearch">搜索</text>
+  </view>
+
+  <!-- 2. 功能网格 -->
+  <view class="grid-menu">
+    <view class="grid-item {{currentTab === 'hot' ? 'active' : ''}}" bindtap="switchTab" data-type="hot">
+      <text class="grid-icon">🎬</text>
+      <text>正在热映</text>
+    </view>
+    <view class="grid-item {{currentTab === 'wait' ? 'active' : ''}}" bindtap="switchTab" data-type="wait">
+      <text class="grid-icon">📅</text>
+      <text>即将上映</text>
+    </view>
+    <view class="grid-item" bindtap="goNearby">
+      <text class="grid-icon">🏫</text>
+      <text>附近影院</text>
+    </view>
+    <view class="grid-item" bindtap="goAIChat">
+      <text class="grid-icon">🤖</text>
+      <text>AI助手</text>
+    </view>
+  </view>
+
+  <!-- 3. 搜索结果 -->
+  <view class="section" wx:if="{{isSearching && searchResult.length > 0}}">
+    <view class="section-header">
+      <text class="title">🔍 搜索结果 "{{searchKeyword}}"</text>
+      <text class="more" bindtap="clearSearch">清除</text>
+    </view>
+    <view class="movie-list">
+      <view class="movie-item" wx:for="{{searchResult}}" wx:key="id" bindtap="goDetail" data-id="{{item.id}}">
+        <image class="poster" src="{{item.poster}}" mode="aspectFill" lazy-load />
+        <view class="info">
+          <view class="top">
+            <text class="title">{{item.title}}</text>
+          </view>
+          <view class="desc-box">
+            <text class="desc">{{item.description}}</text>
+          </view>
+          <view class="tags">
+            <text class="tag">{{item.duration}}分钟</text>
+            <text class="tag">{{formatDate(item.releaseDate)}}</text>
+          </view>
+          <view class="bottom">
+            <text class="price">¥{{item.price || 35}} 起</text>
+            <button class="buy-btn" catchtap="goBuy" data-id="{{item.id}}">购票</button>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 4. 热映电影列表 -->
+  <view class="section" wx:if="{{!isSearching && currentTab === 'hot'}}" id="hotSection">
+    <view class="section-header">
+      <text class="title">🔥 正在热映</text>
+      <text class="more">全部 ></text>
+    </view>
+    
+    <view class="movie-list">
+      <view class="movie-item" wx:for="{{hotList}}" wx:key="id" bindtap="goDetail" data-id="{{item.id}}">
+        <image class="poster" src="{{item.poster}}" mode="aspectFill" lazy-load />
+        <view class="info">
+          <view class="top">
+            <text class="title">{{item.title}}</text>
+          </view>
+          <view class="desc-box">
+            <text class="desc">{{item.description}}</text>
+          </view>
+          <view class="tags">
+            <text class="tag">{{item.duration}}分钟</text>
+            <text class="tag">{{formatDate(item.releaseDate)}}</text>
+          </view>
+          <view class="bottom">
+            <text class="price">¥{{item.price || 35}} 起</text>
+            <button class="buy-btn" catchtap="goBuy" data-id="{{item.id}}">购票</button>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="loading-text" wx:if="{{loading}}">加载中...</view>
+    <view class="loading-text" wx:if="{{noMore}}">没有更多了</view>
+  </view>
+
+  <!-- 5. 待映电影列表 -->
+  <view class="section" wx:if="{{!isSearching && currentTab === 'wait'}}" id="waitSection">
+    <view class="section-header">
+      <text class="title">📅 即将上映</text>
+      <text class="more">全部 ></text>
+    </view>
+    
+    <view class="movie-list">
+      <view class="movie-item" wx:for="{{waitList}}" wx:key="id" bindtap="goDetail" data-id="{{item.id}}">
+        <image class="poster" src="{{item.poster}}" mode="aspectFill" lazy-load />
+        <view class="info">
+          <view class="top">
+            <text class="title">{{item.title}}</text>
+            <text class="tag wait-tag">待映</text>
+          </view>
+          <view class="desc-box">
+            <text class="desc">{{item.description}}</text>
+          </view>
+          <view class="tags">
+            <text class="tag">{{item.duration}}分钟</text>
+            <text class="tag">{{formatDate(item.releaseDate)}}</text>
+          </view>
+          <view class="bottom">
+            <text class="price">预售开启</text>
+            <button class="buy-btn wait-btn" disabled>预售</button>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <view class="loading-text" wx:if="{{loading}}">加载中...</view>
+    <view class="loading-text" wx:if="{{noMore}}">没有更多了</view>
+  </view>
+
+  <!-- 6. 无搜索结果提示 -->
+  <view class="empty-result" wx:if="{{isSearching && searchResult.length === 0}}">
+    <text class="empty-icon">😕</text>
+    <text class="empty-text">未找到相关电影</text>
+  </view>
+</view>

@@ -1,0 +1,279 @@
+/* pages/order/order-detail.wxss */
+.container {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  padding: 20rpx;
+  padding-bottom: 120rpx;
+}
+
+/* 加载状态 */
+.loading-state {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  color: #999;
+  font-size: 28rpx;
+}
+
+/* 头部 */
+.header {
+  background-color: #fff;
+  padding: 30rpx;
+  border-radius: 16rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.header .title {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.header-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 8rpx;
+}
+
+.header .status {
+  font-size: 28rpx;
+  font-weight: 600;
+}
+
+.header .countdown {
+  font-size: 24rpx;
+  color: #ff4d4f;
+  font-weight: 500;
+}
+
+/* 卡片样式 */
+.card {
+  background-color: #fff;
+  border-radius: 16rpx;
+  margin-bottom: 20rpx;
+  overflow: hidden;
+}
+
+.card-header {
+  padding: 24rpx 30rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+  font-size: 28rpx;
+  font-weight: 600;
+  color: #333;
+}
+
+.card-body {
+  padding: 30rpx;
+}
+
+/* 信息行 */
+.info-row {
+  display: flex;
+  align-items: center;
+  font-size: 26rpx;
+  color: #666;
+  margin-bottom: 10rpx;
+}
+
+.info-row .label {
+  color: #999;
+}
+
+.info-row .value {
+  color: #333;
+  flex: 1;
+}
+
+.info-row .divider {
+  margin: 0 16rpx;
+  color: #ddd;
+}
+
+/* 电影卡片 */
+.movie-card .movie-name {
+  font-size: 32rpx;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+
+.movie-card .info-row {
+  margin-bottom: 16rpx;
+}
+
+.movie-card .info-text {
+  color: #666;
+}
+
+.movie-card .seat-info {
+  margin-top: 20rpx;
+  padding-top: 20rpx;
+  border-top: 1rpx dashed #f0f0f0;
+}
+
+.movie-card .info-label {
+  color: #999;
+}
+
+/* 金额卡片 */
+.amount-card .amount-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.amount-card .amount-label {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.amount-card .amount-value {
+  font-size: 36rpx;
+  font-weight: 600;
+  color: #ff5722;
+}
+
+.amount-card .pay-time {
+  padding-top: 20rpx;
+  border-top: 1rpx dashed #f0f0f0;
+  font-size: 26rpx;
+}
+
+.amount-card .pay-label {
+  color: #999;
+}
+
+.amount-card .pay-value {
+  color: #666;
+}
+
+/* 验证卡片 */
+.verify-card .qr-code-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20rpx 0;
+  margin-bottom: 30rpx;
+  position: relative;
+}
+
+.verify-card .qr-code {
+  width: 400rpx;
+  height: 400rpx;
+  border-radius: 8rpx;
+}
+
+.verify-card .qr-tip {
+  margin-top: 16rpx;
+  font-size: 24rpx;
+  color: #999;
+}
+
+.verify-card .verify-code-section {
+  background-color: #f8f9fa;
+  padding: 24rpx;
+  border-radius: 12rpx;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10rpx;
+}
+
+.verify-card .verify-label {
+  font-size: 28rpx;
+  color: #999;
+}
+
+.verify-card .verify-code {
+  font-size: 28rpx;
+  color: #333;
+  font-weight: 600;
+  flex: 1;
+  word-break: break-all;
+  line-height: 1.6;
+  min-width: 300rpx;
+}
+
+.verify-card .copy-tip {
+  font-size: 24rpx;
+  color: #ff5722;
+}
+
+/* 时间卡片 */
+.time-card .info-row {
+  margin-bottom: 16rpx;
+}
+
+.time-card .time-label {
+  color: #999;
+}
+
+.time-card .time-value {
+  color: #666;
+}
+
+/* 底部按钮 */
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  padding: 20rpx 30rpx;
+  border-top: 1rpx solid #f0f0f0;
+  box-shadow: 0 -2rpx 10rpx rgba(0, 0, 0, 0.05);
+  display: flex;
+  gap: 20rpx;
+}
+
+.btn-back {
+  flex: 1;
+  height: 80rpx;
+  line-height: 80rpx;
+  background-color: #ff5722;
+  color: #fff;
+  font-size: 30rpx;
+  border-radius: 40rpx;
+  border: none;
+}
+
+.btn-cancel,
+.btn-pay,
+.btn-refund {
+  flex: 1;
+  height: 80rpx;
+  line-height: 80rpx;
+  font-size: 30rpx;
+  border-radius: 40rpx;
+  border: none;
+}
+
+.btn-cancel {
+  background-color: #fff;
+  color: #999;
+  border: 1rpx solid #ddd;
+}
+
+.btn-pay {
+  background-color: #ff4d4f;
+  color: #fff;
+}
+
+.btn-refund {
+  background-color: #fff;
+  color: #ff4d4f;
+  border: 1rpx solid #ff4d4f;
+}
+
+.btn-back::after,
+.btn-cancel::after,
+.btn-pay::after,
+.btn-refund::after {
+  border: none;
+}

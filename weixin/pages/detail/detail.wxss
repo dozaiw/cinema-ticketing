@@ -1,0 +1,529 @@
+.detail-container {
+  padding-bottom: 120rpx;
+  background: #F5F5F5;
+  min-height: 100vh;
+}
+
+/* 头部信息 */
+.header {
+  background: #FFFFFF;
+  padding: 30rpx;
+  display: flex;
+  border-bottom: 1rpx solid #EEEEEE;
+}
+.header .poster {
+  width: 200rpx;
+  height: 280rpx;
+  border-radius: 8rpx;
+  background: #EEE;
+  flex-shrink: 0;
+}
+.header .info {
+  margin-left: 20rpx;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+/* 标题行（标题 + 收藏） */
+.title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 15rpx;
+}
+.header .title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+  flex: 1;
+  margin-bottom: 10rpx;
+}
+
+/* 收藏按钮 */
+.favorite-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 15rpx 25rpx;
+  background: #FFF5F5;
+  border-radius: 12rpx;
+}
+.favorite-icon {
+  font-size: 36rpx;
+  line-height: 1;
+}
+.favorite-text {
+  font-size: 22rpx;
+  color: #FF5722;
+  margin-top: 8rpx;
+}
+
+/* 操作行（评分 + 收藏） */
+.action-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 20rpx;
+  margin-bottom: 20rpx;
+}
+
+/* 评分 */
+.score-container {
+  display: flex;
+  align-items: baseline;
+}
+.score-value {
+  font-size: 56rpx;
+  font-weight: bold;
+  color: #FF5722;
+}
+.score-unit {
+  font-size: 28rpx;
+  color: #FF5722;
+  margin-left: 8rpx;
+}
+.score-container.no-score .score-text {
+  font-size: 28rpx;
+  color: #999;
+}
+
+/* 类型标签 */
+.genres {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 10rpx;
+}
+.genre-tag {
+  background: #FFF0E9;
+  color: #FF5722;
+  padding: 4rpx 12rpx;
+  border-radius: 4rpx;
+  font-size: 22rpx;
+  margin-right: 10rpx;
+  margin-bottom: 5rpx;
+}
+
+.header .tags {
+  display: flex;
+  font-size: 24rpx;
+  color: #999;
+}
+.header .tag {
+  margin-right: 15rpx;
+}
+
+/* 内容区域 */
+.section {
+  background: #FFFFFF;
+  margin: 20rpx;
+  padding: 30rpx;
+  border-radius: 16rpx;
+}
+.section-title {
+  display: block;
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+}
+.content {
+  color: #666;
+  font-size: 28rpx;
+  line-height: 1.6;
+}
+
+/* 预告片 */
+.video {
+  width: 100%;
+  border-radius: 8rpx;
+}
+
+/* 演职人员 */
+.cast-list {
+  white-space: nowrap;
+}
+.cast-item {
+  display: inline-block;
+  width: 120rpx;
+  text-align: center;
+  margin-right: 20rpx;
+}
+.avatar {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  background: #EEE;
+}
+.name {
+  display: block;
+  font-size: 24rpx;
+  color: #333;
+  margin-top: 10rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.role {
+  display: block;
+  font-size: 22rpx;
+  color: #999;
+}
+
+/* 评论区域 */
+.comment-section {
+  margin-bottom: 120rpx;
+}
+.comment-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+.write-comment-btn {
+  padding: 8rpx 24rpx;
+  background: linear-gradient(90deg, #FF5722, #FF7043);
+  color: white;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+  border: none;
+  margin: 0;
+}
+.write-comment-btn::after {
+  border: none;
+}
+
+/* 评论列表 */
+.comment-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20rpx;
+}
+.comment-item {
+  display: flex;
+  gap: 15rpx;
+  position: relative;
+  padding-bottom: 20rpx;
+  border-bottom: 1rpx solid #F5F5F5;
+}
+.comment-item:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+.comment-avatar {
+  width: 70rpx;
+  height: 70rpx;
+  border-radius: 50%;
+  background: #F0F0F0;
+  flex-shrink: 0;
+}
+.comment-content-wrapper {
+  flex: 1;
+}
+.comment-user {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8rpx;
+}
+.username {
+  font-size: 26rpx;
+  color: #333;
+  font-weight: 500;
+}
+.comment-time {
+  font-size: 22rpx;
+  color: #999;
+  margin-left: auto;
+}
+.comment-text {
+  font-size: 26rpx;
+  color: #666;
+  line-height: 1.6;
+  display: block;
+}
+.comment-actions {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  gap: 12rpx;
+}
+.comment-report text,
+.comment-delete text {
+  font-size: 22rpx;
+  padding: 5rpx 10rpx;
+}
+.comment-report text {
+  color: #FF5722;
+}
+.comment-delete text {
+  color: #999;
+}
+
+/* 暂无评论 */
+.no-comment {
+  text-align: center;
+  padding: 60rpx 0;
+  color: #999;
+  font-size: 26rpx;
+}
+
+/* 评论弹窗 */
+.comment-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+}
+.comment-mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+}
+.comment-input-wrapper {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  max-height: 70vh;
+  background: white;
+  border-radius: 30rpx 30rpx 0 0;
+  padding: 30rpx;
+  box-sizing: border-box;
+  overflow-y: auto;
+}
+.comment-input-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+.comment-input-header .title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+}
+.cancel-btn,
+.submit-btn {
+  font-size: 28rpx;
+}
+.cancel-btn {
+  color: #999;
+}
+.submit-btn {
+  color: #FF5722;
+  font-weight: 500;
+}
+
+/* 评分选择 */
+.rating-section {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+  padding: 20rpx;
+  background: #FFF9F5;
+  border-radius: 12rpx;
+}
+.rating-label {
+  font-size: 28rpx;
+  color: #666;
+  margin-right: 15rpx;
+}
+.stars-wrapper {
+  display: flex;
+  gap: 2rpx;
+  flex: 1;
+}
+.star-item {
+  position: relative;
+  width: 40rpx;
+  height: 40rpx;
+  display: flex;
+}
+.star {
+  font-size: 40rpx;
+  color: #DDD;
+  cursor: pointer;
+  transition: color 0.2s;
+  width: 100%;
+  text-align: center;
+}
+.star.active {
+  color: #FFB400;
+}
+.star-half {
+  font-size: 40rpx;
+  color: #DDD;
+  cursor: pointer;
+  transition: color 0.2s;
+  width: 50%;
+  overflow: hidden;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+}
+.star-half.active {
+  color: #FFB400;
+}
+.rating-value {
+  font-size: 32rpx;
+  color: #FF5722;
+  font-weight: bold;
+  margin-left: 20rpx;
+}
+
+.comment-textarea {
+  width: 100%;
+  min-height: 200rpx;
+  max-height: 300rpx;
+  font-size: 28rpx;
+  color: #333;
+  line-height: 1.6;
+  background: #F5F5F5;
+  border-radius: 12rpx;
+  padding: 20rpx;
+  box-sizing: border-box;
+}
+.char-count {
+  text-align: right;
+  font-size: 22rpx;
+  color: #999;
+  margin-top: 10rpx;
+}
+
+.report-target {
+  padding: 20rpx;
+  border-radius: 12rpx;
+  background: #F8F8F8;
+  color: #666;
+  font-size: 26rpx;
+  margin-bottom: 20rpx;
+}
+
+.reason-section {
+  margin-bottom: 20rpx;
+}
+
+.reason-label {
+  display: block;
+  font-size: 28rpx;
+  color: #333;
+  margin-bottom: 16rpx;
+}
+
+.reason-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16rpx;
+}
+
+.reason-chip {
+  padding: 12rpx 24rpx;
+  border-radius: 999rpx;
+  background: #F5F5F5;
+  color: #666;
+  font-size: 24rpx;
+}
+
+.reason-chip.active {
+  background: #FFF0E9;
+  color: #FF5722;
+}
+
+/* 评论列表中的评分 */
+.comment-rating {
+  display: flex;
+  align-items: center;
+  margin: 10rpx 0;
+}
+.comment-stars {
+  display: flex;
+  gap: 2rpx;
+}
+.comment-star-item {
+  position: relative;
+  width: 24rpx;
+  height: 24rpx;
+  display: flex;
+}
+.comment-star {
+  font-size: 24rpx;
+  color: #DDD;
+  width: 100%;
+  text-align: center;
+}
+.comment-star.active {
+  color: #FFB400;
+}
+.comment-star-half {
+  font-size: 24rpx;
+  color: #DDD;
+  width: 50%;
+  overflow: hidden;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 1;
+}
+.comment-star-half.active {
+  color: #FFB400;
+}
+.comment-rating-value {
+  font-size: 24rpx;
+  color: #FF5722;
+  margin-left: 10rpx;
+}
+
+/* 底部购票栏（长条形） */
+.bottom-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: #FFFFFF;
+  padding: 20rpx 30rpx;
+  box-shadow: 0 -4rpx 12rpx rgba(0,0,0,0.05);
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bottom-bar.disabled {
+  justify-content: center;
+}
+
+.price-info {
+  flex: 1;
+}
+
+.price-text {
+  color: #FF5722;
+  font-size: 40rpx;
+  font-weight: bold;
+}
+
+.status-info {
+  color: #999;
+  font-size: 30rpx;
+}
+
+.buy-btn-full {
+  width: 240rpx;
+  height: 88rpx;
+  background: linear-gradient(90deg, #FF5722, #FF7043);
+  color: #FFFFFF;
+  font-size: 32rpx;
+  font-weight: bold;
+  border-radius: 44rpx;
+  border: none;
+  box-shadow: 0 8rpx 16rpx rgba(255, 87, 34, 0.3);
+}

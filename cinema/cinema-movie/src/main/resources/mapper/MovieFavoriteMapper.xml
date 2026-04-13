@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cinema.movie.mapper.MovieFavoriteMapper">
+
+    <!-- 根据用户 ID 查询收藏的电影列表 -->
+    <select id="selectFavoriteList" resultType="com.cinema.movie.entity.Movie">
+        SELECT
+        m.id,
+        m.title,
+        m.duration,
+        m.release_date,
+        m.offline_date,
+        m.poster,
+        m.trailer_url,
+        m.description,
+        m.status
+        FROM movie_favorite mf
+        INNER JOIN movie m ON mf.movie_id = m.id
+        WHERE mf.user_id = #{userId}
+        AND mf.is_deleted = 0          <!-- 收藏未删除 -->
+        ORDER BY mf.create_time DESC     <!-- 按收藏时间倒序 -->
+    </select>
+
+</mapper>

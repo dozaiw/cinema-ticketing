@@ -1,0 +1,95 @@
+<!-- pages/seat/seat.wxml -->
+<view class="container">
+  <!-- 顶部电影信息 -->
+  <view class="movie-header">
+    <image wx:if="{{movie.poster}}" src="{{movie.poster}}" mode="aspectFill" class="movie-poster"></image>
+    <view class="movie-info">
+      <text class="movie-title">{{movieName || '电影名称'}}</text>
+      <view class="schedule-detail">
+        <text class="detail-item">{{hallName}}</text>
+        <text class="divider">|</text>
+        <text class="detail-item">{{showStartTime || '--'}}</text>
+        <text class="divider">-</text>
+        <text class="detail-item">{{showEndTime || '--'}}</text>
+      </view>
+    </view>
+    <view class="price-info">
+      <text class="price-symbol">¥</text>
+      <text class="price-value">{{price}}</text>
+    </view>
+  </view>
+
+  <!-- 座位图区域 -->
+  <view class="seat-map-container">
+    <view class="seat-map-header">
+      <text class="hall-name">{{hallName || '1 号厅'}}</text>
+    </view>
+
+    <!-- 银幕 -->
+    <view class="screen-area">
+      <view class="screen"></view>
+      <text class="screen-text">银幕</text>
+    </view>
+
+    <!-- 座位显示区域 -->
+    <view class="seats-container">
+      <view class="seat-row" wx:for="{{seatRows}}" wx:key="rowNum">
+        <!-- 排号 -->
+        <view class="row-label">{{item.rowNum}}</view>
+        <!-- 座位 -->
+        <view class="seats-in-row">
+          <view
+            wx:for="{{item.seats}}"
+            wx:for-item="seat"
+            wx:key="seatId"
+            class="seat-item"
+            style="{{seat.seatStyle}}"
+            bindtap="handleSeatTap"
+            data-seat-id="{{seat.seatId}}">
+            <text class="seat-text">{{seat.colNum}}</text>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 座位图例 -->
+    <view class="legend">
+      <view class="legend-item">
+        <view class="legend-box legend-available"></view>
+        <text>可选</text>
+      </view>
+      <view class="legend-item">
+        <view class="legend-box legend-selected"></view>
+        <text>已选</text>
+      </view>
+      <view class="legend-item">
+        <view class="legend-box legend-sold"></view>
+        <text>已售</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部操作栏 -->
+  <view class="bottom-bar">
+    <view class="selected-seats-info">
+      <text class="selected-count">已选 {{selectedSeatIds.length}} 座</text>
+      <scroll-view class="selected-seats-list" scroll-x wx:if="{{selectedSeatInfo.length > 0}}">
+        <view class="selected-seat-tag" wx:for="{{selectedSeatInfo}}" wx:key="*this">
+          <text>{{item}}</text>
+          <text class="remove-tag" bindtap="removeSeat" data-index="{{index}}">×</text>
+        </view>
+      </scroll-view>
+    </view>
+    <view class="total-price-section">
+      <text class="total-label">合计</text>
+      <view class="total-price">
+        <text class="currency">¥</text>
+        <text class="amount">{{totalPrice}}</text>
+      </view>
+    </view>
+    <button class="confirm-btn {{selectedSeatIds.length === 0 ? 'disabled' : ''}}"
+      disabled="{{selectedSeatIds.length === 0}}" bindtap="confirmSelect">
+      确认选座
+    </button>
+  </view>
+</view>

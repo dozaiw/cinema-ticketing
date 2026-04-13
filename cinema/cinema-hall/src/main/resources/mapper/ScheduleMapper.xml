@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cinema.hall.mapper.ScheduleMapper">
+
+    <!-- ==================== 通用结果映射==================== -->
+    <resultMap id="ScheduleVOMap" type="com.cinema.hall.vo.ScheduleVO">
+        <id property="id" column="id"/>
+        <result property="movieId" column="movie_id"/>
+        <result property="hallId" column="hall_id"/>
+        <result property="hallName" column="hall_name"/>
+        <result property="startTime" column="start_time"/>
+        <result property="endTime" column="end_time"/>
+        <result property="price" column="price"/>
+        <result property="status" column="status"/>
+
+        <!-- 电影信息字段 -->
+        <result property="movieTitle" column="movie_title"/>
+        <result property="moviePoster" column="movie_poster"/>
+        <result property="movieDuration" column="movie_duration"/>
+
+        <!-- 影院信息字段 -->
+        <result property="cinemaId" column="cinema_id"/>
+        <result property="cinemaName" column="cinema_name"/>
+    </resultMap>
+
+
+    <!-- 查询某电影某天的有效排片 -->
+    <select id="selectByMovieAndDate" resultType="com.cinema.hall.dto.ScheduleDto">
+        SELECT
+        s.id AS scheduleId,
+        s.movie_id AS movieId,
+        s.hall_id AS hallId,
+        h.name AS hallName,
+        h.cinema_id AS cinemaId,
+        s.start_time AS startTime,
+        s.end_time AS endTime,
+        s.price AS price,
+        s.status AS status,
+        (SELECT COUNT(*) FROM seat_schedule ss
+        WHERE ss.schedule_id = s.id) AS remainSeats
+        FROM schedule s
+        LEFT JOIN hall h ON s.hall_id = h.id
+        WHERE s.movie_id = #{movieId}
+        AND DATE(s.start_time) = #{date}
+        ORDER BY s.start_time ASC
+    </select>
+
+    <!-- 查询所有电影某天的有效排片 -->
+    <select id="selectAllSchedulesByDate" resultType="com.cinema.hall.dto.ScheduleDto">
+        SELECT
+        s.id AS scheduleId,
+        s.movie_id AS movieId,
+        s.hall_id AS hallId,
+        h.name AS hallName,
+        h.cinema_id AS cinemaId,
+        s.start_time AS startTime,
+        s.end_time AS endTime,
+        s.price AS price,
+        s.status AS status,
+        (SELECT COUNT(*) FROM seat_schedule ss
+        WHERE ss.schedule_id = s.id) AS remainSeats
+        FROM schedule s
+        LEFT JOIN hall h ON s.hall_id = h.id
+        WHERE DATE(s.start_time) = #{date}
+        ORDER BY s.movie_id, s.start_time ASC
+    </select>
+
+    <!-- 查询电影所有未来排片 -->
+    <select id="selectAllFutureSchedules" resultType="com.cinema.hall.dto.ScheduleDto">
+        SELECT
+        s.id AS scheduleId,
+        s.movie_id AS movieId,
+        s.hall_id AS hallId,
+        h.name AS hallName,
+        h.cinema_id AS cinemaId,
+        s.start_time AS startTime,
+        s.end_time AS endTime,
+        s.price AS price,
+        s.status AS status,
+        (SELECT COUNT(*) FROM seat_schedule ss
+        WHERE ss.schedule_id = s.id) AS remainSeats
+        FROM schedule s
+        LEFT JOIN hall h ON s.hall_id = h.id
+        WHERE s.movie_id = #{movieId}
+        AND s.start_time &gt;= NOW()
+        ORDER BY s.start_time ASC
+    </select>
+
+    <!-- 查询某电影某天的影院列表 -->
+    <select id="selectCinemasByMovieAndDate" resultType="com.cinema.hall.entity.Cinema">
+        SELECT DISTINCT
+        c.id,
+        c.name,
+        c.address,
+        c.phone
+        FROM schedule s
+        INNER JOIN hall h ON s.hall_id = h.id
+        INNER JOIN cinema c ON h.cinema_id = c.id
+        WHERE s.movie_id = #{movieId}
+        AND DATE(s.start_time) = #{date}
+        ORDER BY c.name ASC
+    </select>
+
+    <select id="selectSchedulesByMovieCinemaAndDate" resultMap="ScheduleVOMap">
+        SELECT
+        -- 排片基础字段
+        s.id,
+        s.movie_id,
+        s.hall_id,
+        s.start_time,
+        s.end_time,
+        s.price,
+        s.status,
+        -- 影厅名称
+        h.name AS hall_name,
+        m.id AS movie_id,
+        m.title AS movie_title,
+        m.poster AS movie_poster,
+        m.duration AS movie_duration,
+        c.id AS cinema_id,
+        c.name AS cinema_name
+        FROM schedule s
+        INNER JOIN hall h ON s.hall_id = h.id
+        INNER JOIN cinema c ON h.cinema_id = c.id
+        LEFT JOIN movie m ON s.movie_id = m.id
+        WHERE s.movie_id = #{movieId}
+        AND c.id = #{cinemaId}
+        AND DATE(s.start_time) = #{date}
+        AND c.status = 1          -- 影院营业中
+        AND h.status = 1          -- 影厅可用
+        ORDER BY s.start_time ASC
+    </select>
+
+    <select id="selectScheduleList" resultMap="ScheduleVOMap">
+        SELECT
+        s.id,
+        s.movie_id,
+        s.hall_id,
+        s.start_time,
+        s.end_time,
+        s.price,
+        s.status,
+        h.name AS hall_name,
+        m.title AS movie_title,
+        m.poster AS movie_poster,
+        m.duration AS movie_duration,
+        c.id AS cinema_id,
+        c.name AS cinema_name
+        FROM schedule s
+        INNER JOIN hall h ON s.hall_id = h.id
+        INNER JOIN cinema c ON h.cinema_id = c.id
+        LEFT JOIN movie m ON s.movie_id = m.id
+        <where>
+            AND c.status = 1
+            AND h.status = 1
+            <if test="params.movieId != null">
+                AND s.movie_id = #{params.movieId}
+            </if>
+            <if test="params.cinemaId != null">
+                AND c.id = #{params.cinemaId}
+            </if>
+            <if test="params.date != null">
+                AND DATE(s.start_time) = #{params.date}
+            </if>
+            <if test="params.startTime != null">
+                AND s.start_time &gt;= #{params.startTime}
+            </if>
+            <if test="params.endTime != null">
+                AND s.end_time &lt;= #{params.endTime}
+            </if>
+
+            <!-- 🔥 添加业务状态筛选 -->
+            <if test="params.status != null">
+                <choose>
+                    <!-- 0: 未开始 (start_time > 当前时间) -->
+                    <when test="params.status == 0">
+                        AND s.start_time &gt; NOW()
+                    </when>
+                    <!-- 1: 进行中 (start_time <= 当前时间 AND end_time > 当前时间) -->
+                    <when test="params.status == 1">
+                        AND s.start_time <![CDATA[ <= ]]> NOW()
+                        AND s.end_time &gt; NOW()
+                    </when>
+                    <!-- 2: 已结束 (end_time <= 当前时间) -->
+                    <when test="params.status == 2">
+                        AND s.end_time <![CDATA[ <= ]]> NOW()
+                    </when>
+                </choose>
+            </if>
+        </where>
+        ORDER BY s.start_time ASC
+        <if test="params.offset != null and params.pageSize != null">
+            LIMIT #{params.offset}, #{params.pageSize}
+        </if>
+    </select>
+
+    <select id="countScheduleList" resultType="java.lang.Long">
+        SELECT COUNT(*)
+        FROM schedule s
+        INNER JOIN hall h ON s.hall_id = h.id
+        INNER JOIN cinema c ON h.cinema_id = c.id
+        <where>
+            AND c.status = 1
+            AND h.status = 1
+            <if test="params.movieId != null">
+                AND s.movie_id = #{params.movieId}
+            </if>
+            <if test="params.cinemaId != null">
+                AND c.id = #{params.cinemaId}
+            </if>
+            <if test="params.date != null">
+                AND DATE(s.start_time) = #{params.date}
+            </if>
+            <if test="params.startTime != null">
+                AND s.start_time &gt;= #{params.startTime}
+            </if>
+            <if test="params.endTime != null">
+                AND s.end_time &lt;= #{params.endTime}
+            </if>
+
+            <!-- 🔥 添加业务状态筛选 -->
+            <if test="params.status != null">
+                <choose>
+                    <!-- 0: 未开始 -->
+                    <when test="params.status == 0">
+                        AND s.start_time &gt; NOW()
+                    </when>
+                    <!-- 1: 进行中 -->
+                    <when test="params.status == 1">
+                        AND s.start_time <![CDATA[ <= ]]> NOW()
+                        AND s.end_time &gt; NOW()
+                    </when>
+                    <!-- 2: 已结束 -->
+                    <when test="params.status == 2">
+                        AND s.end_time <![CDATA[ <= ]]> NOW()
+                    </when>
+                </choose>
+            </if>
+        </where>
+    </select>
+
+</mapper>

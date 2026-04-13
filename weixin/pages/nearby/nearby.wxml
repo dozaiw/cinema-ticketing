@@ -1,0 +1,28 @@
+<view class="nearby-container">
+  <!-- 顶部定位信息 -->
+  <view class="location-header">
+    <text class="location-icon">📍</text>
+    <text class="location-text">{{currentLocation || '定位中...'}}</text>
+    <text class="refresh-btn" bindtap="refreshLocation">🔄 刷新</text>
+  </view>
+
+  <!-- 影院列表 -->
+  <view class="cinema-list" wx:if="{{cinemaList.length > 0}}">
+    <view class="cinema-item" wx:for="{{cinemaList}}" wx:key="id" bindtap="goCinemaDetail" data-cinema="{{item}}">
+      <view class="cinema-info">
+        <text class="cinema-name">{{item.name}}</text>
+        <text class="cinema-address">📍 {{item.address}}</text>
+        <text class="cinema-phone">📞 {{item.phone}}</text>
+      </view>
+      <view class="cinema-distance">
+        <text class="distance-value">{{formatDistance(item.distance)}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 无数据提示 -->
+  <view class="empty" wx:else>
+    <text class="empty-icon">🏢</text>
+    <text class="empty-text">附近暂无影院</text>
+  </view>
+</view>

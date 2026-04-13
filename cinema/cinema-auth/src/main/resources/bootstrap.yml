@@ -1,0 +1,7 @@
+spring:
+  application:
+    name: cinema-auth
+  config:
+    import: optional:classpath:cinema-shared.yml
+  profiles:
+    active: dev

@@ -1,0 +1,114 @@
+.register-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #F5F5F5;
+  padding: 40rpx;
+}
+
+.logo-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 80rpx;
+  margin-top: 60rpx;
+}
+
+.logo-text {
+  font-size: 48rpx;
+  color: #FF5722;
+  font-weight: bold;
+}
+
+.slogan {
+  color: #999999;
+  font-size: 28rpx;
+  margin-top: 10rpx;
+}
+
+.form-area {
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 40rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.05);
+}
+
+.form-item {
+  margin-bottom: 30rpx;
+}
+
+.label {
+  display: block;
+  font-size: 28rpx;
+  color: #333333;
+  margin-bottom: 15rpx;
+  font-weight: 500;
+}
+
+.input {
+  width: 100%;
+  height: 88rpx;
+  background: #F5F5F5;
+  border-radius: 12rpx;
+  padding: 0 30rpx;
+  font-size: 28rpx;
+  box-sizing: border-box;
+}
+
+.avatar-upload {
+  width: 100%;
+  height: 160rpx;
+  background: #F5F5F5;
+  border-radius: 12rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.avatar-preview {
+  width: 160rpx;
+  height: 160rpx;
+  border-radius: 12rpx;
+}
+
+.avatar-default {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #999999;
+}
+
+.avatar-icon {
+  font-size: 48rpx;
+  margin-bottom: 10rpx;
+}
+
+.avatar-text {
+  font-size: 24rpx;
+}
+
+.register-btn {
+  width: 100%;
+  height: 88rpx;
+  background: linear-gradient(90deg, #FF5722, #FF7043);
+  color: #FFFFFF;
+  font-size: 32rpx;
+  font-weight: bold;
+  border-radius: 40rpx;
+  border: none;
+  margin-top: 40rpx;
+  box-shadow: 0 8rpx 16rpx rgba(255, 87, 34, 0.3);
+}
+
+.login-link {
+  display: flex;
+  justify-content: center;
+  margin-top: 40rpx;
+  font-size: 28rpx;
+  color: #999999;
+}
+
+.link-text {
+  color: #FF5722;
+  margin-left: 10rpx;
+}

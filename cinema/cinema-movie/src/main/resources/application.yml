@@ -1,0 +1,19 @@
+# 服务器配置
+server:
+  port: 8001
+
+spring:
+  config:
+    import: optional:classpath:cinema-shared.yml
+  application:
+    name: cinema-movie
+  servlet:
+    multipart:
+      enabled: true
+      max-file-size: 250MB
+      max-request-size: 250MB
+
+movie:
+  cache:
+    hot-movies:
+      expire: 30

@@ -1,0 +1,211 @@
+.schedule-container {
+  min-height: 100vh;
+  background: #F5F6F7;
+  padding-bottom: 40rpx;
+}
+
+/* 电影信息卡片 */
+.movie-card {
+  background: #FFFFFF;
+  padding: 30rpx;
+  display: flex;
+  border-bottom: 1rpx solid #EEEEEE;
+}
+.movie-poster {
+  width: 120rpx;
+  height: 170rpx;
+  border-radius: 8rpx;
+  background: #EEE;
+}
+.movie-info {
+  margin-left: 20rpx;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.movie-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 15rpx;
+}
+.movie-tags {
+  display: flex;
+  font-size: 22rpx;
+  color: #999;
+}
+.movie-tags .tag {
+  margin-right: 15rpx;
+}
+
+/* 日期选择器 */
+.date-bar {
+  background: #FFFFFF;
+  padding: 20rpx 0;
+  margin: 20rpx 0;
+}
+.date-scroll {
+  white-space: nowrap;
+  padding: 0 30rpx;
+}
+.date-item {
+  display: inline-block;
+  width: 100rpx;
+  text-align: center;
+  padding: 15rpx 0;
+  margin-right: 20rpx;
+  border-radius: 12rpx;
+  background: #F5F5F5;
+}
+.date-item.active {
+  background: #FFF0E9;
+  color: #FF5722;
+}
+.date-week {
+  display: block;
+  font-size: 24rpx;
+  margin-bottom: 5rpx;
+}
+.date-day {
+  display: block;
+  font-size: 28rpx;
+  font-weight: bold;
+}
+
+/* 影院列表 */
+.cinema-list {
+  margin: 0 30rpx;
+}
+.cinema-item {
+  background: #FFFFFF;
+  border-radius: 16rpx;
+  padding: 30rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 4rpx 16rpx rgba(0, 0, 0, 0.05);
+}
+.cinema-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20rpx;
+}
+.cinema-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+.cinema-name {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 10rpx;
+}
+.cinema-address {
+  font-size: 24rpx;
+  color: #666;
+  margin-bottom: 5rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.cinema-price {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.cinema-price .price {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #FF5722;
+}
+.cinema-price .price-unit {
+  font-size: 20rpx;
+  color: #FF5722;
+}
+
+/* 影院标签 */
+.cinema-tags {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 20rpx;
+}
+.tag-item {
+  font-size: 20rpx;
+  color: #FF5722;
+  border: 1rpx solid #FFE4E1;
+  background: #FFF5F5;
+  padding: 4rpx 12rpx;
+  border-radius: 4rpx;
+  margin-right: 10rpx;
+  margin-bottom: 5rpx;
+}
+
+/* 场次列表 */
+.schedule-list {
+  border-top: 1rpx solid #F5F5F5;
+  padding-top: 20rpx;
+}
+.schedule-label {
+  font-size: 24rpx;
+  color: #999;
+  margin-bottom: 15rpx;
+  display: block;
+}
+.schedule-times {
+  display: flex;
+  flex-wrap: wrap;
+}
+.schedule-time {
+  display: flex;
+  align-items: center;
+  background: #F5F5F5;
+  padding: 15rpx 20rpx;
+  border-radius: 8rpx;
+  margin-right: 15rpx;
+  margin-bottom: 10rpx;
+}
+.schedule-time.sold-out {
+  background: #F0F0F0;
+  opacity: 0.6;
+}
+.schedule-time .time {
+  font-size: 28rpx;
+  font-weight: bold;
+  color: #333;
+  margin-right: 15rpx;
+}
+.schedule-time .hall {
+  font-size: 22rpx;
+  color: #666;
+  margin-right: 15rpx;
+}
+.schedule-time .price {
+  font-size: 26rpx;
+  font-weight: bold;
+  color: #FF5722;
+}
+
+/* 无场次提示 */
+.no-schedule {
+  padding: 30rpx 0;
+  text-align: center;
+}
+.no-schedule-text {
+  font-size: 26rpx;
+  color: #999;
+}
+
+/* 无数据 */
+.empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 100rpx 0;
+}
+.empty-icon {
+  font-size: 100rpx;
+  margin-bottom: 20rpx;
+}
+.empty-text {
+  color: #999;
+  font-size: 28rpx;
+}

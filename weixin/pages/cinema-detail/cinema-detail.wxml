@@ -1,0 +1,91 @@
+<view class="cinema-detail-container">
+  <!-- 1. 顶部信息：电影 + 影院 -->
+  <view class="header-section">
+    <!-- 电影信息 -->
+    <view class="movie-info">
+      <image src="{{movie.poster}}" mode="aspectFill" class="movie-poster" />
+      <view class="movie-detail">
+        <text class="movie-title">{{movie.title}}</text>
+        <text class="movie-tags">
+          {{movie.duration}}分钟 | {{movie.genres && movie.genres.length > 0 ? movie.genres[0].name : ''}}
+        </text>
+      </view>
+    </view>
+
+    <!-- 分隔线 -->
+    <view class="divider"></view>
+
+    <!-- 影院信息 -->
+    <view class="cinema-info">
+      <view class="cinema-header">
+        <text class="cinema-name">{{cinema.name}}</text>
+        <text class="location-icon" bindtap="openLocation">📍</text>
+      </view>
+      <text class="cinema-address">{{cinema.address}}</text>
+      <view class="cinema-tags" wx:if="{{cinema.phone}}">
+        <text class="tag-item">📞 {{cinema.phone}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 2. 日期选择器（一周） -->
+  <view class="date-bar">
+    <scroll-view scroll-x class="date-scroll">
+      <view 
+        class="date-item {{currentIndex === index ? 'active' : ''}}" 
+        wx:for="{{dateList}}" 
+        wx:key="date"
+        bindtap="selectDate"
+        data-index="{{index}}"
+      >
+        <text class="date-week">{{item.week}}</text>
+        <text class="date-day">{{item.date}}</text>
+      </view>
+    </scroll-view>
+  </view>
+
+  <!-- 3. 场次列表 -->
+  <view class="schedule-section">
+    <view class="section-title">
+      <text class="title-text">{{selectedDateLabel || '今日排片'}}</text>
+      <text class="title-count">{{scheduleList.length}}场</text>
+    </view>
+    
+    <view class="schedule-list" wx:if="{{scheduleList.length > 0}}">
+      <view 
+        class="schedule-card {{item.displayStatus === 2 ? 'sold-out' : ''}}"
+        wx:for="{{scheduleList}}" 
+        wx:key="id"
+        bindtap="selectSchedule"
+        data-schedule="{{item}}"
+      >
+        <!-- 左侧：时间 -->
+        <view class="schedule-time">
+          <text class="start-time">{{item.startTimeStr || formatTime(item.startTime)}}</text>
+          <text class="time-divider"></text>
+          <text class="end-time">{{item.endTimeStr || formatTime(item.endTime)}}</text>
+        </view>
+        
+        <!-- 中间：厅名 -->
+        <view class="schedule-hall">
+          <text class="hall-name">{{item.hallName || '厅'}}</text>
+        </view>
+        
+        <!-- 右侧：价格 + 状态（垂直居中对齐） -->
+        <view class="schedule-action">
+          <text class="price">¥{{item.price}}</text>
+          <text class="status-badge {{item.displayStatusTagType}}" wx:if="{{item.displayStatusDesc}}">
+            {{item.displayStatusDesc}}
+          </text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 无场次提示 -->
+    <view class="empty" wx:else>
+      <text class="empty-icon">🎬</text>
+      <text class="empty-text">该日期暂无场次</text>
+      <text class="empty-hint">换个日期试试吧</text>
+    </view>
+  </view>
+</view>
