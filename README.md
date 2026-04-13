@@ -17,6 +17,24 @@
 - 使用微信小程序实现移动端购票与订单查看流程
 - 使用阿里百炼能力接入 AI 对话问答服务，支持电影相关信息查询
 
+## 项目截图
+
+### 电影详情页
+
+![电影详情页](../../桌面/新建文件夹/图片/电影详情页1.png)
+
+### 影院选择界面
+
+![影院选择界面](../../桌面/新建文件夹/图片/影院选择界面.png)
+
+### 支付完成页
+
+![支付完成页](../../桌面/新建文件夹/图片/支付后界面.png)
+
+### 后台首页
+
+![后台首页](../../桌面/新建文件夹/图片/后台首页图1.png)
+
 ## 技术栈
 
 ### 后端
@@ -29,7 +47,6 @@
 - MyBatis-Plus
 - MySQL 8
 - Redis
-- RabbitMQ
 - Nacos
 - Redisson
 
@@ -123,7 +140,6 @@
 - npm 9+
 - MySQL 8.x
 - Redis 6.x 或更高
-- RabbitMQ 3.x
 - Nacos 2.x
 - 微信开发者工具
 
@@ -149,7 +165,6 @@
 
 - MySQL
 - Redis
-- RabbitMQ
 - Nacos
 - JWT 密钥
 - 内部服务 Token
@@ -172,7 +187,6 @@
 
 - MySQL
 - Redis
-- RabbitMQ
 - Nacos
 
 并创建好业务数据库，例如：
@@ -248,101 +262,3 @@ npm run dev
 `weixin/utils/request.js`
 
 如果需要真机调试，请保证后端服务地址可被手机访问。
-
-## 部署说明
-
-### 后端部署
-
-推荐将每个微服务单独打包部署。
-
-在 `cinema` 目录执行：
-
-```powershell
-mvn clean package -DskipTests
-```
-
-打包完成后，可在各模块 `target` 目录中获取 jar 包并分别启动：
-
-```powershell
-java -jar cinema-auth\target\cinema-auth-*.jar
-java -jar cinema-movie\target\cinema-movie-*.jar
-java -jar cinema-hall\target\cinema-hall-*.jar
-java -jar cinema-ticketing\target\cinema-ticketing-*.jar
-java -jar cinema-ai\target\cinema-ai-*.jar
-```
-
-建议生产环境使用：
-
-- Windows 服务
-- NSSM
-- Linux `systemd`
-- Docker / Docker Compose
-
-来托管各个 Java 服务与基础中间件。
-
-### 管理后台部署
-
-进入管理后台目录：
-
-```powershell
-cd D:\New project\天天影院\vue\cinema-admin
-npm install
-npm run build
-```
-
-构建产物位于：
-
-`vue/cinema-admin/dist`
-
-可将其部署到：
-
-- Nginx
-- 宝塔静态站点
-- 云服务器静态资源目录
-
-并通过反向代理将接口请求转发到对应后端服务。
-
-### 微信小程序部署
-
-小程序端不需要传统 Web 部署，使用微信开发者工具进行上传与发布即可。  
-发布前需要确认：
-
-- `project.config.json` 中的 `appid` 已替换为你自己的小程序 AppID
-- 小程序后台已配置合法请求域名
-- 后端服务已部署到公网可访问地址
-
-## 部署建议
-
-如果要部署到服务器，建议采用以下结构：
-
-- Nginx：负责管理后台静态资源与接口转发
-- Java 微服务：分别运行 `auth / movie / hall / ticketing / ai`
-- MySQL：业务数据存储
-- Redis：缓存、会话、座位状态控制
-- RabbitMQ：异步消息处理
-- Nacos：配置中心与服务发现
-
-建议至少拆分出以下配置：
-
-- 开发环境
-- 测试环境
-- 生产环境
-
-避免将真实密钥直接写入仓库。
-
-## 注意事项
-
-- 当前仓库已移除 `resource/` 目录，媒体素材不会随仓库提交
-- `.zip`、`node_modules`、`target`、`dist`、IDE 配置等文件已通过 `.gitignore` 过滤
-- 若你要公开上传到 GitHub，请再次确认没有测试账号、真实业务数据或截图残留
-
-## 后续可补充内容
-
-如果你准备把这个仓库用于答辩、求职或展示，建议后续再补：
-
-- 数据库建表 SQL
-- 接口文档截图或在线文档地址
-- 系统架构图
-- 选座并发控制流程图
-- 小程序页面截图
-- 部署拓扑图
