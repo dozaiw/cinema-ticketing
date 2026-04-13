@@ -145,7 +145,6 @@
 项目中的公共后端配置位于：
 
 `cinema/cinema-common/src/main/resources/cinema-shared.yml`
-
 该文件已经替换为可公开上传的占位版本，实际运行前请按本地环境填写：
 
 - MySQL
@@ -347,4 +346,3 @@ npm run build
 - 选座并发控制流程图
 - 小程序页面截图
 - 部署拓扑图
-
