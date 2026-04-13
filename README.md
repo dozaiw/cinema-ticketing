@@ -21,19 +21,23 @@
 
 ### 电影详情页
 
-![电影详情页](../../桌面/新建文件夹/图片/电影详情页1.png)
+![电影详情页](docs/screenshots/movie-detail.png)
 
 ### 影院选择界面
 
-![影院选择界面](../../桌面/新建文件夹/图片/影院选择界面.png)
+![影院选择界面](docs/screenshots/cinema-select.png)
 
 ### 支付完成页
 
-![支付完成页](../../桌面/新建文件夹/图片/支付后界面.png)
+![支付完成页](docs/screenshots/payment-success.png)
+
+### 收藏页面
+
+![收藏页面](docs/screenshots/favorites.png)
 
 ### 后台首页
 
-![后台首页](../../桌面/新建文件夹/图片/后台首页图1.png)
+![后台首页](docs/screenshots/admin-dashboard.png)
 
 ## 技术栈
 
